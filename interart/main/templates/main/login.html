@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>INTERART</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table}}
+        </table>
+    <button type="button" onclick="location.href='/join/'">회원 가입</button>
+    <input type='submit' value='로그인'>
+</body>
+</html>

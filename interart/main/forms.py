@@ -15,6 +15,9 @@ class MemberForm(forms.ModelForm):
         _id = self.cleaned_data.get('id')
         id_length = len(_id)
         
+        if Member.objects.filter(id=_id).exists():
+            raise ValidationError('중복된 아이디가 존재합니다.')
+        
         if id_length > 4:
             
             if re.search('[0-9]+', _id) and re.search('[a-zA-Z]+', _id):

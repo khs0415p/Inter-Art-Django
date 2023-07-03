@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import MemberForm, LoginForm
+from .forms import JoinForm, LoginForm
 
 # Create your views here.
 
@@ -11,7 +11,6 @@ def login(request):
         if form.is_valid():
             return redirect('main:board')
         
-        
     else:
         form = LoginForm()
     return render(request, 'main/login.html', {'form': form})
@@ -19,16 +18,19 @@ def login(request):
 # Join (Sign-up)
 def join(request):
     if request.method == "POST":
-        form = MemberForm(request.POST)
-        
+        form = JoinForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('main:login')
+            
+            return redirect('/')
+
     else:
-        form = MemberForm()
-    return render(request, 'main/join.html', {'form': form})
+        form = JoinForm()
+    
+    return render(request, 'main/join.html', {"form": form})
 
 # Board (게시판)
 def board(request):
+        
     return render(request, 'main/board.html')
     

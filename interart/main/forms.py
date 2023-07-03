@@ -1,28 +1,83 @@
 from typing import Any, Dict
 from django import forms
-from .models import Member
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
+from argon2 import PasswordHasher
 import re
 
-
-class MemberForm(forms.ModelForm):
+class JoinForm(forms.ModelForm):
+    
+    username = forms.CharField(
+            required=True,
+            max_length=15,
+            label="아이디",
+            widget=forms.TextInput(attrs={
+                'placeholder': "가입하실 아이디를 입력해주세요."
+            })
+    )
+    
+    password = forms.CharField(
+            required=True,
+            max_length=15,
+            label="비밀번호",
+            widget=forms.PasswordInput(attrs={
+                'placeholder': "가입하실 비밀번호를 입력해주세요."
+            })
+    )
+    
+    password2 = forms.CharField(
+            required=True,
+            max_length=15,
+            label="비밀번호확인",
+            widget=forms.PasswordInput(attrs={
+                'placeholder': "확인용 비밀번호를 입력해주세요."
+            })
+    )
+    
+    first_name = forms.CharField(
+            required=True,
+            max_length=10,
+            label="이름",
+            widget=forms.TextInput(attrs={
+                'placeholder': "예시 : 길동"
+            })
+    )
+    
+    last_name = forms.CharField(
+            required=True,
+            max_length=10,
+            label="성",
+            widget=forms.TextInput(attrs={
+                'placeholder': "예시 : 홍"
+            })
+    )
+    
+    email = forms.EmailField(
+            required=True,
+            max_length=100,
+            label="이메일",
+            widget=forms.EmailInput(
+                attrs={
+                    'placeholder': "예시 : abc@xxx.xxx"
+                }
+            )
+    )
     class Meta:
-        model = Member
-        fields = '__all__'
+        model = get_user_model()
+        fields = ['username', 'password', 'password2', 'first_name', 'last_name', 'email', 'gender']
         
-    def clean_id(self):
-        _id = self.cleaned_data.get('id')
-        id_length = len(_id)
         
-        if Member.objects.filter(id=_id).exists():
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        username_length = len(username)
+        if self._meta.model.objects.filter(username=username).exists():
             raise ValidationError('중복된 아이디가 존재합니다.')
         
-        if id_length > 4:
+        if username_length > 4:
             
-            if re.search('[0-9]+', _id) and re.search('[a-zA-Z]+', _id):
-                if  not re.search('[~!@#$%^&*()_+|<>?:{}]', _id):
-                    return _id
+            if re.search('[0-9]+', username) and re.search('[a-zA-Z]+', username):
+                if  not re.search('[~!@#$%^&*()_+|<>?:{}]', username):
+                    return username
                 
                 else:
                     raise ValidationError('아이디는 특수문자를 사용하실 수 없습니다.')
@@ -32,50 +87,60 @@ class MemberForm(forms.ModelForm):
         else:
             raise ValidationError('아이디는 최소 5글자 이상으로 설정할 수 있습니다.')
         
+    def clean_password2(self):
+        password1 = self.data.get("password")
+        password2 = self.data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise ValidationError("입력하신 비밀번호가 다릅니다.")
+        
     
     def clean_password(self):
         password = self.cleaned_data.get('password')
         password_length = len(password)
         if password_length > 4:
             
-            if re.search('[0-9]+', password) and re.search('[a-zA-Z]+', password) and re.search('[~!@#$%^&*()_+|<>?:{}]', password):
-                return password
+            if re.search('[0-9]+', password) and re.search('[a-zA-Zㄱ-ㅎ]+', password) and re.search('[~!@#$%^&*()_+|<>?:{}]', password):
+                hashed_password = PasswordHasher().hash(password=password)
+                return hashed_password
             
             else:
-                raise ValidationError('비밀번호는 영문, 숫자 특수문자 조합으로 설정할 수 있습니다.')
-        
+                raise ValidationError('비밀번호는 문자, 숫자 및 특수문자의 조합으로 설정할 수 있습니다.')
+            
         else:
             raise ValidationError('비밀번호는 최소 5글자 이상으로 설정할 수 있습니다.')
+            
+    def save(self, commit=True):
+        user = super().save(commit)
+        user.password = self.cleaned_data['password']
+        if commit:
+            user.save()
+                
+        return user
         
-        return
-    
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        
-        if re.match('^[a-zA_Z0-9+-_.]+@[a-zA_Z0-9]+\\.[a-zA_Z0-9-.]+$', email):
-            if Member.objects.filter(email=email).exists():
-                raise ValidationError('이미 가입된 이메일 입니다.')
-            return email
-        else:
-            raise ValidationError('이메일 형식을 확인해주세요.')
         
 class LoginForm(forms.ModelForm):
     class Meta:
-        model = Member
-        fields = ['id', 'password']
+        model = get_user_model()
+        fields = ['username', 'password']
         
     def clean(self):
-        _id = self.cleaned_data.get('id')
+        username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
         
-        if not password or not _id:
-            raise ValidationError("아이디 또는 비밀번호를 입력해주세요.")
-        
         try:
-            member = Member.objects.get(id = _id)
+            user = self._meta.model.objects.get(username=username)
         except:
             raise ValidationError("아이디가 존재하지 않습니다.")
         
-        if (password != member.password):
+        try:
+            result = PasswordHasher().verify(user.password, password)
+        
+        except:
             raise ValidationError("비밀번호가 일치하지 않습니다.")
+        
+        
+# class PostForm(forms.ModelForm):
+#     class Meta:
+#         model = Post
+#         fields = '__all__'
         

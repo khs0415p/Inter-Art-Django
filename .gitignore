@@ -6,3 +6,6 @@ __pycache__/
 
 # media
 media/
+
+# .DS store
+.DS_Store

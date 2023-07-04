@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('main/', include('main.urls')),
     path('', RedirectView.as_view(url='/main/', permanent=True)),
-    path('draw/', include('draw.urls')),
+    # path('draw/', include('draw.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

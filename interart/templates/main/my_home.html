@@ -1,24 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'navbar.html' %}
-<div class="container">
-  <h3>내 게시물 목록</h3>
+<div class="pt-5 container">
+    <h3>내 게시물 목록</h3>
     {% for item in post_list %}
-    {% if forloop.counter0|divisibleby:3%}
-        <div class="img_list">
-    {% endif%}
-      <a href="../detail/{{ item.id }}/" class="post">
-      {% if item.image %}
-        <img src="{{ item.image.url }}" class="thumbnail" alt="">
-      {% else %}
-        <img src="/static/no_image.png" class="thumbnail" alt="">
-      {% endif %}
-        <p>{{ item.title }}</p>
-      <p>{{ item.created_at }}<p>
+    {% if forloop.counter0|divisibleby:3 %}
+      <div class="img-list">
+    {% endif %}
+    <div class='img-card'>
+    <a class="img-product" href="../detail/{{ item.id }}">
+    {% if item.image %}
+        <img src="{{ item.image.url }}" alt="">
+    {% else %}
+        <img src="/static/no_image.png" alt="">
+    {% endif %}
+    <div class="post-title">제목 : {{ item.title }}</div>
+    <div class="post-likes">작성일 : {{ item.created_at }}</div>
     </a>
-    {% if forloop.counter|divisibleby:3 or forloop.last %}
+    </div>
+    {% if forloop.counter|divisibleby:3 %}
       </div>
-    {% endif%}
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

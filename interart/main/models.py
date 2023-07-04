@@ -17,6 +17,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     image = models.ImageField(null=True, upload_to="%Y/%m/%d", blank=True)
+    like_user = models.ManyToManyField(User, related_name='like_post')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

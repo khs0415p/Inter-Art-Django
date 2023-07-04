@@ -1,5 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'navbar.html' %}
-{% comment %} 주간 TOP 10 (좋아요) {% endcomment %}
+<div class="pt-5 container">
+    <h3>TOP 12</h3>
+    {% for item in top_post %}
+    {% if forloop.counter0|divisibleby:3 %}
+      <div class="img-list">
+    {% endif %}
+    <div class='img-card'>
+    <a class="img-product" href="../detail/{{ item.id }}">
+    {% if item.image %}
+        <img src="{{ item.image.url }}" alt="">
+    {% else %}
+        <img src="/static/no_image.png" alt="">
+    {% endif %}
+    <div class="post-title">제목 : {{ item.title }}</div>
+    <div class="post-likes">좋아요 : {{ item.like_user.count }}</div>
+    </a>
+    </div>
+    {% if forloop.counter|divisibleby:3 %}
+      </div>
+    {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}

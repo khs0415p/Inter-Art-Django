@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from .forms import JoinForm, LoginForm, PostForm, CommentForm
-from .models import User, Post
+from .models import Post
 import json
 
 # Create your views here.
@@ -22,10 +22,12 @@ def login(request):
         form = LoginForm()
     return render(request, 'main/login.html', {'form': form})
 
+
 # Logout
 def logout(request):
     auth_logout(request)
     return redirect("main:login")
+
 
 # Join (Sign-up)
 def join(request):
@@ -41,10 +43,16 @@ def join(request):
     
     return render(request, 'main/join.html', {"form": form})
 
+
 # Home
 def home(request):
-    # db에서 top10그림 뽑아서 앞으로 보내주기
-    return render(request, 'main/home.html')
+    # 기간 내 최다 좋아요 Top-10
+    # 기간 내 등록된 글이 없다면? 이 아니라 기간, 좋아요 정렬 top-10으로 하면댐
+    top_post = Post.objects.all().order_by('-created_at')[:12]
+    top_post = sorted(top_post, key=lambda x:-x.like_user.count())
+    
+    return render(request, 'main/home.html', {"top_post": top_post})
+
 
 # Board
 def board(request):
@@ -56,6 +64,7 @@ def board(request):
 def my_home(request):
     post_list = Post.objects.filter(user_id=request.user.pk).order_by('-created_at')
     return render(request, 'main/my_home.html', context={"post_list": post_list})
+
 
 # Write
 def write(request):
@@ -87,3 +96,16 @@ def detail(request, post_id):
         
     _post = Post.objects.get(id = post_id)
     return render(request, 'main/detail.html', {'post': _post})
+
+
+# Like
+def likes(request, post_id):
+    # 404 처리
+    _post = Post.objects.get(id=post_id)
+    if _post.like_user.filter(pk=request.user.pk).exists():
+        _post.like_user.remove(request.user)
+    else:
+        _post.like_user.add(request.user)
+    
+    return redirect(f'/main/detail/{post_id}')
+

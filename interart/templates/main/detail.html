@@ -6,7 +6,7 @@
 [  ] 댓글 추가
 작성자 : 댓글 내용
  {% endcomment %}
-<div class="container">
+ <div class="pt-5 container">
     <div class="top">
         <h1>제목 : {{ post.title }}</h1>
         <p>작성자 : {{ post.user }}</p>
@@ -19,6 +19,17 @@
     <div class="middle">
         {{ post.content }}
         <p>여기까지가 본문 내용</p>
+    </div>
+    <div class="like-box">
+        <form action="{% url 'main:likes' post.id %}" method="POST">
+            {% csrf_token %}
+            {% if user in post.like_user.all %}
+            <input type="submit" value="좋아요 취소">
+            {% else %}
+            <input type="submit" value="좋아요">
+            {% endif %}
+            {{ post.like_user.count }}
+        </form>
     </div>
     <div class="comment-box">
         <form action="{% url 'main:detail' post.id %}" method="POST">

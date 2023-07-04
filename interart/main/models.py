@@ -12,9 +12,20 @@ class User(AbstractUser):
 
     
         
-# class Post(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    image = models.ImageField(null=True, upload_to="%Y/%m/%d", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 # class Book(models.Model):
 #     """Model representing a book (but not a specific copy of a book)."""

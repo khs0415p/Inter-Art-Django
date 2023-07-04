@@ -2,6 +2,7 @@ from typing import Any, Dict
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from .models import Post, Comment
 from argon2 import PasswordHasher
 import re
 
@@ -62,6 +63,12 @@ class JoinForm(forms.ModelForm):
                 }
             )
     )
+    
+    gender = forms.ChoiceField(
+            required=True,
+            label="성별",
+            choices=(("None", "선택"),("남성", "남성"), ("여성", "여성")))
+    
     class Meta:
         model = get_user_model()
         fields = ['username', 'password', 'password2', 'first_name', 'last_name', 'email', 'gender']
@@ -108,7 +115,13 @@ class JoinForm(forms.ModelForm):
             
         else:
             raise ValidationError('비밀번호는 최소 5글자 이상으로 설정할 수 있습니다.')
-            
+    
+    def clean_gender(self):
+        gender = self.cleaned_data.get("gender")
+        if gender == "None":
+            raise ValidationError("성별을 선택해주세요.")
+        
+     
     def save(self, commit=True):
         user = super().save(commit)
         user.password = self.cleaned_data['password']
@@ -133,14 +146,32 @@ class LoginForm(forms.ModelForm):
             raise ValidationError("아이디가 존재하지 않습니다.")
         
         try:
-            result = PasswordHasher().verify(user.password, password)
+            PasswordHasher().verify(user.password, password)
         
         except:
             raise ValidationError("비밀번호가 일치하지 않습니다.")
+
+
+class PostForm(forms.ModelForm): # ModelForm 은 장고 모델 폼
+    class Meta: # 장고 모델 폼은 반드시 내부에 Meta 클래스 가져야 함
+        model = Post
+        fields = ['title', 'content', 'image']
+        labels = {
+            'title': '제목',
+            'content': '내용',
+            'image': '이미지',
+        }
         
-        
-# class PostForm(forms.ModelForm):
-#     class Meta:
-#         model = Post
-#         fields = '__all__'
+class CommentForm(forms.ModelForm):
+    comment = forms.CharField(
+            required=True,
+            max_length=200,
+            label='',
+            widget=forms.TextInput(attrs={
+                'placeholder': "댓글을 달아주세요."
+            })
+    )
+    class Meta:
+        model = Comment
+        fields = ['comment']
         

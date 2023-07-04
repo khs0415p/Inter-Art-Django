@@ -1,0 +1,32 @@
+textarea {
+    width:100%;
+}
+
+input[type=submit] {
+    margin-top:10px;
+}
+
+div.img_list{
+    text-align: center;
+    float: left;
+}
+
+img.thumbnail:first-child {
+    margin-top: 100px;
+}
+
+
+img.thumbnail {
+    margin: 20px;
+    width:350px;
+    height:300px;
+}
+
+.image-box {
+    height: auto;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+}

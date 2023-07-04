@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.core.paginator import Paginator
 from .forms import JoinForm, LoginForm, PostForm, CommentForm
 from .models import Post
-import json
+
 
 # Create your views here.
 
@@ -56,8 +57,12 @@ def home(request):
 
 # Board
 def board(request):
+    
+    page = request.GET.get('page', '1')
     post_list = Post.objects.all().order_by('-created_at')
-    return render(request, 'main/board.html', {'post_list': post_list})
+    paginator = Paginator(post_list, 10)
+    page_obj = paginator.get_page(page)
+    return render(request, 'main/board.html', {'post_list': page_obj})
 
 
 # My Home

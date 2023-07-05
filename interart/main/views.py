@@ -15,15 +15,17 @@ from .models import Post
 def login(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
+        _next = request.POST['next']
         if form.is_valid():
             user = form._meta.model.objects.get(username=request.POST['username'])
             auth_login(request, user)
             # request.session['user'] = form._meta.model.objects.get(username=request.POST['username']).pk
-            return redirect('main:home')
+            return redirect(_next)
         
     else:
         form = LoginForm()
-    return render(request, 'main/login.html', {'form': form})
+        _next = request.GET.get('next', 'home/')
+    return render(request, 'main/login.html', {'form': form , 'next': _next})
 
 
 # Logout

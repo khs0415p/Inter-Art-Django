@@ -18,7 +18,8 @@
             <tr>
                 <td>{{ post_list.paginator.count |sub:post_list.start_index|sub:forloop.counter0|add:1 }}</td>
                 <td>
-                    <a href="{% url 'main:detail' post.id %}">{{ post.title }}</a>
+                    <a class="board-title" href="{% url 'main:detail' post.id %}">{{ post.title }}</a>
+                    <span class="comment-count">{{ post.comment_set.count }}</span>
                 </td>
                 <td>{{ post.user }}</td>
                 <td>{{ post.created_at }}</td>

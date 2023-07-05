@@ -36,6 +36,19 @@ input[type=submit] {
     height: 70%;
 }
 
+.board-title {
+    text-decoration: none;
+    color: #000000;
+    font-weight:700;
+    margin-right: 5px;
+}
+
+.comment-count {
+    margin-left: 0px;
+    color: rgb(100, 146, 77);
+    font-size: small;
+}
+
 
 .image-box {
     height: auto;

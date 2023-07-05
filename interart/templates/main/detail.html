@@ -23,14 +23,10 @@
     <div class="like-box">
         <form action="{% url 'main:likes' post.id %}" method="POST">
             {% csrf_token %}
-            {% if user.is_authenticated %}
             {% if user in post.like_user.all %}
             <input type="submit" value="좋아요 취소">
             {% else %}
             <input type="submit" value="좋아요">
-            {% endif %}
-            {% else %}
-            <input disabled type="submit" value="좋아요">
             {% endif %}
             {{ post.like_user.count }}
         </form>

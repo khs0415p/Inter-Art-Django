@@ -5,6 +5,7 @@ from django.contrib.auth import logout as auth_logout
 from django.core.paginator import Paginator
 from .forms import JoinForm, LoginForm, PostForm, CommentForm
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Post
 
 
@@ -106,6 +107,7 @@ def detail(request, post_id):
 
 
 # Like
+@login_required(login_url='main:login')
 def likes(request, post_id):
     
     _post = get_object_or_404(Post, pk=post_id)

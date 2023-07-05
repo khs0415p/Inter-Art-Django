@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.core.paginator import Paginator
 from .forms import JoinForm, LoginForm, PostForm, CommentForm
+from django.shortcuts import get_object_or_404
 from .models import Post
 
 
@@ -95,7 +96,8 @@ def detail(request, post_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.user = request.user
-            comment.post = Post.objects.get(id=post_id)
+            _post = get_object_or_404(Post, pk=post_id)
+            comment.post = _post
             comment.save()
             # return
         
@@ -105,8 +107,8 @@ def detail(request, post_id):
 
 # Like
 def likes(request, post_id):
-    # 404 처리
-    _post = Post.objects.get(id=post_id)
+    
+    _post = get_object_or_404(Post, pk=post_id)
     if _post.like_user.filter(pk=request.user.pk).exists():
         _post.like_user.remove(request.user)
     else:

@@ -49,6 +49,14 @@ input[type=submit] {
     font-size: small;
 }
 
+.search-box{
+    text-align: center;
+}
+
+.search-box .form-control {
+    width:70%;
+    display: inline-block;
+}
 
 .image-box {
     height: auto;

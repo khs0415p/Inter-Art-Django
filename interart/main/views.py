@@ -6,7 +6,9 @@ from django.core.paginator import Paginator
 from .forms import JoinForm, LoginForm, PostForm, CommentForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Post
+from django.db.models import Q
+from django.contrib import messages
+from .models import Post, Comment
 
 
 # Create your views here.
@@ -63,14 +65,26 @@ def home(request):
 def board(request):
     
     page = request.GET.get('page', '1')
+    kw = request.GET.get('kw', '')
     post_list = Post.objects.all().order_by('-created_at')
+    print('kw', kw, 'page',page)
+    if kw:
+        post_list = post_list.filter(
+            Q(title__icontains=kw) |
+            Q(content__icontains=kw) |
+            Q(user__username__icontains=kw) |
+            Q(comment__user__username__icontains=kw) |
+            Q(comment__comment__icontains=kw)
+        ).distinct()
+        
     paginator = Paginator(post_list, 10)
     page_obj = paginator.get_page(page)
-    return render(request, 'main/board.html', {'post_list': page_obj})
+    return render(request, 'main/board.html', {'post_list': page_obj, 'page':page, 'kw': kw})
 
 
 # My Home
 def my_home(request):
+    
     post_list = Post.objects.filter(user_id=request.user.pk).order_by('-created_at')
     return render(request, 'main/my_home.html', context={"post_list": post_list})
 
@@ -107,6 +121,62 @@ def detail(request, post_id):
     _post = Post.objects.get(id = post_id)
     return render(request, 'main/detail.html', {'post': _post})
 
+
+# Post Modify
+@login_required(login_url='main:login')
+def post_modify(request, post_id):
+    _post = get_object_or_404(Post, pk=post_id)
+    if request.user != _post.user:
+        messages.error(request, "수정권한이 없습니다.")
+        return redirect('main:detail', post_id=post_id)
+    
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=_post)
+        if form.is_valid():
+            _post.save()
+            return redirect('main:detail', post_id=post_id)
+        
+    form = PostForm(instance=_post)
+    return render(request, 'main/write.html', {"form": form})
+
+
+# Post Delete
+@login_required(login_url='main:login')
+def post_delete(request, post_id):
+    _post = get_object_or_404(Post, pk=post_id)
+    if request.user != _post.user:
+        messages.error(request, "삭제권한이 없습니다.")
+        return redirect('main:detail', post_id=post_id)
+    _post.delete()
+    return redirect('main:my_home')
+
+# Comment Modify
+@login_required(login_url='main:login')
+def comment_modify(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    
+    if request.user != comment.user:
+        messages.error("수정권한이 없습니다.")
+        return redirect("main:detail", post_id=comment.post.id)
+    
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save()
+            return redirect("main:detail", post_id=comment.post.id)
+    form = CommentForm(instance=comment)
+    return render(request, 'main/comment_modify.html', {"form": form})
+
+
+# Comment Delete
+@login_required(login_url='main:login')
+def comment_delete(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.user != comment.user:
+        messages.error(request, "삭제권한이 없습니다.")
+        return redirect('main:detail', post_id=comment.post.id)
+    comment.delete()
+    return redirect('main:detail', post_id=comment.post.id)
 
 # Like
 @login_required(login_url='main:login')

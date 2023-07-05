@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'navbar.html' %}
+
 <div class="pt-5 container">
+  {% if not user.is_authenticated %}
+  
+  <button type="button" class="btn btn-primary" onclick="location.href='/main/'" style="float: middle;">로그인</button>
+  
+  {% else %}
     <h3>내 게시물 목록</h3>
     {% for item in post_list %}
     {% if forloop.counter0|divisibleby:3 %}
@@ -23,4 +29,5 @@
     {% endif %}
     {% endfor %}
 </div>
+{% endif %}
 {% endblock %}

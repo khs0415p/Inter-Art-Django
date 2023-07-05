@@ -23,10 +23,14 @@
     <div class="like-box">
         <form action="{% url 'main:likes' post.id %}" method="POST">
             {% csrf_token %}
+            {% if user.is_authenticated %}
             {% if user in post.like_user.all %}
             <input type="submit" value="좋아요 취소">
             {% else %}
             <input type="submit" value="좋아요">
+            {% endif %}
+            {% else %}
+            <input disabled type="submit" value="좋아요">
             {% endif %}
             {{ post.like_user.count }}
         </form>
@@ -34,8 +38,8 @@
     <div class="comment-box">
         <form action="{% url 'main:detail' post.id %}" method="POST">
             {% csrf_token %}
-            <input type="text" name="comment" placeholder="댓글을 입력해주세요.">
-            <input type="submit" value="댓글등록">
+            <input {% if not user.is_authenticated %} disabled {% endif %} type="text" name="comment" placeholder="댓글을 입력해주세요.">
+            <input {% if not user.is_authenticated %} disabled {% endif %} type="submit" value="댓글등록">
         </form>
     </div>
     <div class="comment-list">

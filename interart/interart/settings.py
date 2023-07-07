@@ -143,3 +143,7 @@ AUTH_USER_MODEL = 'main.User'
 # Login redirect
 
 LOGIN_REDIRECT_URL = 'main:board'
+
+# Session time out
+SESSION_COOKIE_AGE = 1200
+SESSION_SAVE_EVERY_REQUEST = True

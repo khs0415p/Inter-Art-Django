@@ -16,7 +16,7 @@ def home(request):
     top_post = sorted(top_post, key=lambda x:-x.like_user.count())
     
     notice_list = Notice.objects.filter(created_at__range = [start_day, today + timedelta(1)]).order_by("-created_at")
-    print(notice_list)
+    
     return render(request, 'main/home.html', {"top_post": top_post, "notice": notice_list})
 
 

@@ -18,9 +18,9 @@
             <a class="nav-link" href="{% url 'main:my_home' %}">내 게시물</a>
           </li>
         </ul>
-        
+        {% if user.is_authenticated %}
         <strong>{{ user.username }}</strong>님 환영합니다.
-        
+        {% endif %}
         <ul class="navbar-nav ms-3">
         <li class="nav-item">
             {% if user.is_authenticated %}

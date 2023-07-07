@@ -8,24 +8,6 @@ import re
 
 class JoinForm(forms.ModelForm):
     
-    username = forms.CharField(
-            required=True,
-            max_length=15,
-            label="아이디",
-            widget=forms.TextInput(attrs={
-                'placeholder': "가입하실 아이디를 입력해주세요."
-            })
-    )
-    
-    password = forms.CharField(
-            required=True,
-            max_length=15,
-            label="비밀번호",
-            widget=forms.PasswordInput(attrs={
-                'placeholder': "가입하실 비밀번호를 입력해주세요."
-            })
-    )
-    
     password2 = forms.CharField(
             required=True,
             max_length=15,
@@ -34,40 +16,6 @@ class JoinForm(forms.ModelForm):
                 'placeholder': "확인용 비밀번호를 입력해주세요."
             })
     )
-    
-    first_name = forms.CharField(
-            required=True,
-            max_length=10,
-            label="이름",
-            widget=forms.TextInput(attrs={
-                'placeholder': "예시 : 길동"
-            })
-    )
-    
-    last_name = forms.CharField(
-            required=True,
-            max_length=10,
-            label="성",
-            widget=forms.TextInput(attrs={
-                'placeholder': "예시 : 홍"
-            })
-    )
-    
-    email = forms.EmailField(
-            required=True,
-            max_length=100,
-            label="이메일",
-            widget=forms.EmailInput(
-                attrs={
-                    'placeholder': "예시 : abc@xxx.xxx"
-                }
-            )
-    )
-    
-    gender = forms.ChoiceField(
-            required=True,
-            label="성별",
-            choices=(("None", "선택"),("남성", "남성"), ("여성", "여성")))
     
     class Meta:
         model = get_user_model()
@@ -120,6 +68,7 @@ class JoinForm(forms.ModelForm):
         gender = self.cleaned_data.get("gender")
         if gender == "None":
             raise ValidationError("성별을 선택해주세요.")
+        return gender
         
      
     def save(self, commit=True):
@@ -132,6 +81,21 @@ class JoinForm(forms.ModelForm):
         
         
 class LoginForm(forms.ModelForm):
+    username = forms.CharField(
+            required=True,
+            max_length=15,
+            widget=forms.TextInput(attrs={
+                'placeholder': "아이디를 입력해주세요."
+            })
+    )
+    
+    password = forms.CharField(
+            required=True,
+            max_length=15,
+            widget=forms.PasswordInput(attrs={
+                'placeholder': "비밀번호를 입력해주세요."
+            })
+    )
     class Meta:
         model = get_user_model()
         fields = ['username', 'password']

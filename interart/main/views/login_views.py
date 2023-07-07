@@ -31,6 +31,7 @@ def logout(request):
 # Join (Sign-up)
 def join(request):
     if request.method == "POST":
+        print(request.POST)
         form = JoinForm(request.POST)
         if form.is_valid():
             form.save()

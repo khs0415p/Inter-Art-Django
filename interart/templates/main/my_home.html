@@ -1,33 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'navbar.html' %}
-
-<div class="pt-5 container">
-  {% if not user.is_authenticated %}
-  
-  <button type="button" class="btn btn-primary" onclick="location.href='/main/'" style="float: middle;">로그인</button>
-  
-  {% else %}
-    <h3>내 게시물 목록</h3>
+<div class="main-content">
+  <div class="main-container">
+    <div class="main-title">
+      나의<br>
+      게시물
+    </div>
+    {% if not user.is_authenticated %}
+    <!-- 확인 필요 -->
+    <button type="button" class="btn btn-primary" onclick="location.href='/main/'" style="float: middle;">로그인</button>
+    {% else %}  
     {% for item in post_list %}
     {% if forloop.counter0|divisibleby:3 %}
-      <div class="img-list">
+    <div class="img-list">
     {% endif %}
     <div class='img-card'>
-    <a class="img-product" href="../detail/{{ item.id }}">
-    {% if item.image %}
+      <div class="post-img">
+        <a class="img-product" href="../detail/{{ item.id }}">
+        {% if item.image %}
         <img src="{{ item.image.url }}" alt="">
-    {% else %}
+        {% else %}
         <img src="/static/no_image.png" alt="">
-    {% endif %}
-    <div class="post-title">제목 : {{ item.title }}</div>
-    <div class="post-likes">작성일 : {{ item.created_at }}</div>
-    </a>
+        {% endif %}
+      </div>
+      <div class="info-card">
+        <div class="post-info">제목 : {{ item.title }}</div>
+        <div class="post-info">좋아요: {{ item.like_user.count }}</div>
+        <div class="post-info">작성일 : {{ item.created_at }}</div>
+      </div>
+      </a>
     </div>
     {% if forloop.counter|divisibleby:3 %}
-      </div>
+    </div>
     {% endif %}
     {% endfor %}
+    {% endif %}
+  </div>
 </div>
-{% endif %}
 {% endblock %}

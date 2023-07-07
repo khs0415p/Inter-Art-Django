@@ -1,10 +1,83 @@
-{% extends 'base.html' %}
-{% block content %}
-<form action="" method="POST">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table}}
-    </table>
-    <input type="submit" value="가입하기">
-</form>
-{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
+    <title>InterArt</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0%;
+            padding: 0%;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-bg">
+        {% include "form_errors.html" %}
+        <div class="join-box">
+            <form action="" method="POST">
+                {% csrf_token %}
+                
+                <div class="join-title">
+                    회원가입
+                </div>
+                <div class="join-input-box">
+                    <div class="join-input">
+                        <label for="username">아이디</label>
+                        <input type="text" class="form-control" name="username" id="username"
+                            placeholder="가입하실 아이디를 입력해주세요." >
+                    </div>
+                    <div class="join-input">
+                        <label for="password">비밀번호</label>
+                        <input type="password" class="form-control" name="password" id="password"
+                            placeholder="가입하실 비밀번호를 입력해주세요." >
+                    </div>
+                    <div class="join-input">
+                        <label for="password2">비밀번호 확인</label>
+                        <input type="password" class="form-control" name="password2" id="password2"
+                            placeholder="확인용 비밀번호를 입력해주세요." >
+                    </div>
+                    <div class="join-input">
+                        <label for="last_name">성</label>
+                        <input type="text" class="form-control" name="last_name" id="last_name"
+                            placeholder="성을 입력해주세요. 예시) 홍" >
+                    </div>
+                    <div class="join-input">
+                        <label for="first_name">이름</label>
+                        <input type="text" class="form-control" name="first_name" id="first_name"
+                            placeholder="이름을 입력해주세요. 예시) 길동" >
+                    </div>
+                    <div class="join-input">
+                        <label for="email">이메일</label>
+                        <input type="email" class="form-control" name="email" id="email"
+                            placeholder="이메일을 입력해주세요." >
+                    </div>
+                    <div class="join-input">
+                        <label for="gender">성별</label>
+                        <select class="form-select" name="gender" id="gender">
+                            <option value="" selected>---------</option>
+                            <option value="남성">남성</option>
+                            <option value="여성">여성</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-5 text-center">
+                    <input class="btn btn-primary" type="submit" value="가입하기">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+

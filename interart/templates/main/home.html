@@ -1,26 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'navbar.html' %}
-<div class="pt-5 container">
-    <h3>TOP 12</h3>
-    {% for item in top_post %}
-    {% if forloop.counter0|divisibleby:3 %}
-      <div class="img-list">
-    {% endif %}
-    <div class='img-card'>
-    <a class="img-product" href="../detail/{{ item.id }}">
-    {% if item.image %}
-        <img src="{{ item.image.url }}" alt="">
-    {% else %}
-        <img src="/static/no_image.png" alt="">
-    {% endif %}
-    <div class="post-title">제목 : {{ item.title }}</div>
-    <div class="post-likes">좋아요 : {{ item.like_user.count }}</div>
-    </a>
-    </div>
-    {% if forloop.counter|divisibleby:3 %}
+<div class="main-content">
+  <div class="main-container">
+    <div class="section-home">
+      <div class="wrap-item">
+        <div class="main-title">
+          <br>
+          공지사항
+        </div>
+        {% for item in notice %}
+        <div class="notice-item">
+          <div class="notice-title">
+            <!-- {{ notice.title }}-->
+            {{ item.title }}
+          </div>
+          <div class="notice-content">
+            <!-- {{ notice.content }}-->
+            {{ item.content }}
+          </div>
+        </div>
+        {% endfor %}
       </div>
-    {% endif %}
-    {% endfor %}
+      <div class="wrap-item">
+      <div class="main-title">
+        &nbsp;&nbsp;&nbsp;주간<br>
+        TOP {{ top_post|length }}
+      </div>
+      <div class="wrap-half">
+      {% for item in top_post %}
+      <div class='item-card'>
+        <div class="post-img">
+          <a class="img-product" href="../detail/{{ item.id }}">
+          {% if item.image %}
+          <img src="{{ item.image.url }}" alt="">
+          {% else %}
+          <img src="/static/no_image.png" alt="">
+          {% endif %}
+        </div>
+        <div class="info-box">{{ item.title }}</div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    </div>
+   </div>
+  </div>
 </div>
 {% endblock %}

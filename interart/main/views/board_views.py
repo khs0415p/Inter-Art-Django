@@ -1,17 +1,23 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.db.models import Q
-from ..models import Post
+from ..models import Post, Notice
+from datetime import date, timedelta
 
 
 
 # Home
 def home(request):
     
-    top_post = Post.objects.all().order_by('-created_at')[:12]
+    start_day = date.today() - timedelta(days=7)
+    today = date.today()
+    
+    top_post = Post.objects.filter(created_at__range = [start_day, today + timedelta(1)])[:10]
     top_post = sorted(top_post, key=lambda x:-x.like_user.count())
     
-    return render(request, 'main/home.html', {"top_post": top_post})
+    notice_list = Notice.objects.filter(created_at__range = [start_day, today + timedelta(1)]).order_by("-created_at")
+    print(notice_list)
+    return render(request, 'main/home.html', {"top_post": top_post, "notice": notice_list})
 
 
 # Board

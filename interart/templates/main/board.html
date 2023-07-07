@@ -2,85 +2,91 @@
 {% load my_filter %}
 {% block content %}
 {% include 'navbar.html' %}
-<div class="pt-5 container">
-    <!-- 게시물 목록 -->
-    <table class="table">
-        <thead>
-            <tr class="table-white">
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일시</th>
-                {% if user.is_authenticated %}
-                <button type="button" class="btn btn-primary" onclick="location.href='../write'" style="float: right;">글쓰기</button>
+<div class="main-content">
+    <div class="main-container">
+        <div class="main-title">
+            그림<br>
+            게시판
+          </div>
+        <!-- 게시물 목록 -->
+        <table class="table">
+            <thead>
+                <tr class="table-white">
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일시</th>
+                    {% if user.is_authenticated %}
+                    <button type="button" class="btn btn-primary" onclick="location.href='../write'" style="float: right;">글쓰기</button>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% if post_list %}
+                {% for post in post_list %}
+                <tr>
+                    <td>{{ post_list.paginator.count |sub:post_list.start_index|sub:forloop.counter0|add:1 }}</td>
+                    <td>
+                        <a class="board-title" href="{% url 'main:detail' post.id %}">{{ post.title }}</a>
+                        <span class="comment-count">{{ post.comment_set.count }}</span>
+                    </td>
+                    <td>{{ post.user }}</td>
+                    <td>{{ post.created_at }}</td>
+                </tr>
+                {% endfor%}
+                {% else %}
+                <tr>
+                    <td colspan="4">게시글이 없습니다.</td>
+                </tr>
                 {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% if post_list %}
-            {% for post in post_list %}
-            <tr>
-                <td>{{ post_list.paginator.count |sub:post_list.start_index|sub:forloop.counter0|add:1 }}</td>
-                <td>
-                    <a class="board-title" href="{% url 'main:detail' post.id %}">{{ post.title }}</a>
-                    <span class="comment-count">{{ post.comment_set.count }}</span>
-                </td>
-                <td>{{ post.user }}</td>
-                <td>{{ post.created_at }}</td>
-            </tr>
-            {% endfor%}
+            </tbody>
+        </table>
+        <!-- 페이징 -->
+        <ul class="pagination justify-content-center">
+            {% if post_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" data-page="{{ post_list.previous_page_number }}" href="javascript:void(0)">이전</a>
+            </li>
             {% else %}
-            <tr>
-                <td colspan="4">게시글이 없습니다.</td>
-            </tr>
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">이전</a>
+            </li>
             {% endif %}
-        </tbody>
-    </table>
-    <!-- 페이징 -->
-    <ul class="pagination justify-content-center">
-        {% if post_list.has_previous %}
-        <li class="page-item">
-            <a class="page-link" data-page="{{ post_list.previous_page_number }}" href="javascript:void(0)">이전</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">이전</a>
-        </li>
-        {% endif %}
-        <!-- 페이지 리스트 -->
-        {% for page_number in post_list.paginator.page_range %}
-        {% if page_number >= post_list.number|add:-5 and page_number <= post_list.number|add:5 %}
-        {% if page_number == post_list.number %}
-        <li class="page-item active" aria-current="page">
-            <a class="page-link" data-page="{{ page_number }}" href="javascript:void(0)">{{ page_number }}</a>
-        </li>
-        {% else %}
-        <li class="page-item">
-            <a class="page-link" data-page="{{ page_number }}" href="javascript:void(0)">{{ page_number }}</a>
-        </li>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
-        
-        {% if post_list.has_next %}
-        <li class="page-item">
-            <a class="page-link" data-page="{{ post_list.next_page_number }}" href="javascript:void(0)">다음</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">다음</a>
-        </li>
-        {% endif %}
-    </ul>
-    <!-- 검색 -->
-    <div class="search-box">
-        <input type="text" id="search_kw" class="form-control" value="{{ kw|default_if_none:'' }}">
-        <button class="btn btn-outline-secondary" type="button" id="btn_search">검색</button>
+            <!-- 페이지 리스트 -->
+            {% for page_number in post_list.paginator.page_range %}
+            {% if page_number >= post_list.number|add:-5 and page_number <= post_list.number|add:5 %}
+            {% if page_number == post_list.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" data-page="{{ page_number }}" href="javascript:void(0)">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" data-page="{{ page_number }}" href="javascript:void(0)">{{ page_number }}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            
+            {% if post_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" data-page="{{ post_list.next_page_number }}" href="javascript:void(0)">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        <!-- 검색 -->
+        <div class="search-box">
+            <input type="text" id="search_kw" class="form-control" value="{{ kw|default_if_none:'' }}">
+            <button class="btn btn-outline-secondary" type="button" id="btn_search">검색</button>
+        </div>
+        <form id="searchForm" action="{% url 'main:board' %}" method="get">
+            <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:''}}">
+            <input type="hidden" id="page" name="page" value="{{ page }}">
+        </form>
     </div>
-    <form id="searchForm" action="{% url 'main:board' %}" method="get">
-        <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:''}}">
-        <input type="hidden" id="page" name="page" value="{{ page }}">
-    </form>
 <div>
 {% endblock %}
 {% block script %}

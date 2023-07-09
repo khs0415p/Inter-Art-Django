@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main-content">
+  <div class="main-container">
+    <div class="main-title">
+      나의<br>
+      게시물
+    </div>
+    {% if not user.is_authenticated %}
+    <!-- 확인 필요 -->
+    <div class="alert-login">
+      로그인을 해주세요.
+      <button type="button" class="btn btn-primary" onclick="location.href='/main/'" style="float: middle;">로그인</button>
+    </div>
+    {% else %}
+    
+    {% for item in post_list %}
+    <div class='img-card'>
+      <div class="post-img">
+        <a class="img-product" href="../detail/{{ item.id }}">
+        {% if item.image %}
+        <img src="{{ item.image.url }}" alt="">
+        {% else %}
+        <img src="/static/no_image.png" alt="">
+        {% endif %}
+      </div>
+      
+      <div class="post-box">제목 : {{ item.title }}</div>
+      <div class="post-box">좋아요: {{ item.like_user.count }}</div>
+      <div class="post-box">작성일 : {{ item.created_at }}</div>
+      
+      </a>
+    </div>
+    {% endfor %}
+  
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

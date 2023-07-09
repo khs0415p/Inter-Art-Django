@@ -1,10 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>게시판</title>
-</head>
-<body>
-    게시판
-</body>
-</html>
+{% extends 'base.html' %}
+{% load my_filter %}
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main-content">
+    <div class="main-container">
+        <div class="main-title">
+            그림<br>
+            게시판
+          </div>
+        <!-- 게시물 목록 -->
+        <table class="table">
+            <thead>
+                <tr class="table-white">
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th class="date-th">작성일시</th>
+                    <th>좋아요</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if post_list %}
+                {% for post in post_list %}
+                <tr>
+                    <td>{{ post_list.paginator.count |sub:post_list.start_index|sub:forloop.counter0|add:1 }}</td>
+                    <td>
+                        <a class="board-a" href="{% url 'main:detail' post.id %}">{{ post.title }}</a>
+                        <span class="count-widget">{{ post.comment_set.count }}</span>
+                    </td>
+                    <td class="td-1">{{ post.user }}</td>
+                    <td class="td-1">{{ post.created_at }}</td>
+                    <td class="td-1">{{ post.like_user.count }}</td>
+                </tr>
+                {% endfor%}
+                {% else %}
+                <tr>
+                    <td colspan="4">게시글이 없습니다.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <!-- 페이징 -->
+        <ul class="pagination justify-content-center">
+            {% if post_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" data-page="{{ post_list.previous_page_number }}" href="javascript:void(0)">이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">이전</a>
+            </li>
+            {% endif %}
+            <!-- 페이지 리스트 -->
+            {% for page_number in post_list.paginator.page_range %}
+            {% if page_number >= post_list.number|add:-5 and page_number <= post_list.number|add:5 %}
+            {% if page_number == post_list.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" data-page="{{ page_number }}" href="javascript:void(0)">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" data-page="{{ page_number }}" href="javascript:void(0)">{{ page_number }}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            
+            {% if post_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" data-page="{{ post_list.next_page_number }}" href="javascript:void(0)">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% if user.is_authenticated %}
+        <button type="button" class="btn btn-primary" onclick="location.href='../write'" style="float: right;">글쓰기</button>
+        {% endif %}
+        <!-- 검색 -->
+        <div class="search-box">
+            <input type="text" id="search_kw" class="form-control" value="{{ kw|default_if_none:'' }}">
+            <button class="btn btn-outline-secondary" type="button" id="btn_search">검색</button>
+        </div>
+        <form id="searchForm" action="{% url 'main:board' %}" method="get">
+            <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:''}}">
+            <input type="hidden" id="page" name="page" value="{{ page }}">
+        </form>
+    </div>
+<div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+const page_elements = document.getElementsByClassName("page-link");
+Array.from(page_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        document.getElementById('page').value = this.dataset.page;
+        document.getElementById('searchForm').submit();
+    })
+});
+
+const btn_search = document.getElementById("btn_search");
+btn_search.addEventListener('click', function(){
+    document.getElementById('kw').value = document.getElementById('search_kw').value;
+    document.getElementById('page').value = 1;
+    document.getElementById('searchForm').submit();
+});
+
+const input_search = document.getElementById("search_kw");
+input_search.addEventListener("keyup", function(e) {
+    if (e.keyCode === 13) {
+        document.getElementById("btn_search").click();
+    }
+});
+
+</script>
+{% endblock %}

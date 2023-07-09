@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main-content">
+    <div class="main-container">
+        <div class="title-box">
+            <div class="board-title">
+                {{ notice.title }}
+            </div>
+            <div class="board-date">
+                {{ notice.created_at }}
+            </div>
+        </div>
+        <div class="content-box">
+            <div class="board-content">
+                {% for line in notice.content  %}
+                {{ line }}<br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="back-box">
+            
+            <a href="{% url 'main:home' %}">
+                <div class="back-button">
+                돌아가기
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="pt-1 px-3 container">
+      <a class="navbar-brand" href="{% url 'main:home' %}">INTER ART</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" style="margin-left: 250px">
+            <a class="nav-link " href="{% url 'main:board' %}">그림 게시판</a>
+          </li>
+          {% comment %} <li class="nav-item" style="margin-left: 100px">
+            <a class="nav-link" href="#">그림 그리기</a>
+          </li> {% endcomment %}
+          <li class="nav-item" style="margin-left: 100px">
+            <a class="nav-link" href="{% url 'main:my_home' %}">내 게시물</a>
+          </li>
+        </ul>
+        {% if user.is_authenticated %}
+        <strong>{{ user.username }}</strong>님 환영합니다.
+        {% endif %}
+        <ul class="navbar-nav ms-3">
+        <li class="nav-item">
+            {% if user.is_authenticated %}
+            
+            <a class="nav-link" href="{% url 'main:logout' %}">
+            <button class="btn btn-sm btn-outline-secondary" type="button">로그아웃</button>
+            </a>
+            {% else %}
+            <a class="nav-link" href="{% url 'main:login' %}">
+              <button class="btn btn-sm btn-outline-secondary" type="button">로그인</button>
+            </a>
+            {% endif %}
+        </li>
+        </ul> 
+      </div>
+    </div>
+  </nav>

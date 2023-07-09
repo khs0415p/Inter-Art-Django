@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load my_filter %}
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main-content">
+    <div class="main-container">
+        <div class="main-title">
+            글쓰기
+        </div>
+        {% if form.instance.id %}
+        <div class="write-container">
+            <form action="" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <input class="write-title" name="title" placeholder="제목을 입력해주세요." value="{{ form.instance.title }}">
+                <textarea class="write-content" name="content" placeholder="내용을 입력해주세요.">{{ form.instance.content }}</textarea>
+                <div class="file-box">
+                    <input class="file-name" value= {% if form.instance.image %}"{{ form.instance.image|address_process }}"{% else %}"첨부파일"{% endif %} placeholder="첨부파일">
+                    <label for="img-file">찾기</label>
+                    <input id="img-file" name="image" type="file" multiple="multiple">
+                </div>
+                <div style="display: flex; align-items: end;">
+                    <input class="btn btn-primary" type="submit" value="작성완료" style="margin-left: auto;">
+                </div>
+            </form>
+        </div>
+        {% else %}
+        <div class="write-container">
+            <form action="" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <input class="write-title" name="title" placeholder="제목을 입력해주세요.">
+                <textarea class="write-content" name="content" placeholder="내용을 입력해주세요."></textarea>
+                <div class="file-box">
+                    <input class="file-name" value="첨부파일" placeholder="첨부파일">
+                    <label for="img-file">찾기</label>
+                    <input id="img-file" name="image" type="file" multiple="multiple">
+                </div>
+                <div style="display: flex; align-items: end;">
+                    <input class="btn btn-primary" type="submit" value="작성완료" style="margin-left: auto;">
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+
+document.getElementById("img-file").addEventListener('change', function(event) {
+    document.getElementsByClassName('file-name')[0].value = event.target.value;
+});
+</script>
+{% endblock %}

@@ -1,0 +1,612 @@
+@font-face {
+    font-family: 'TheJamsil3Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil3Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TheJamsil2Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil2Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TheJamsil1Thin';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil1Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+
+input[type=submit] {
+    margin-top:10px;
+}
+
+.login-bg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #14C2CC;
+    animation-name: login-bg;
+    animation-duration: 4s;
+    animation-iteration-count:infinite;
+    background-image: radial-gradient(circle farthest-side at top right, transparent, #b3ccf6), radial-gradient(ellipse farthest-corner at 0% 100%, transparent, #f295d0);
+}
+
+@keyframes login-bg {
+    0%, 100% {
+		filter:hue-rotate(0deg);
+	}
+	50% {
+		filter:hue-rotate(-45deg);
+	}
+}
+
+.login-title {
+    font-family: 'Lobster', cursive;
+    font-size: 50px;
+    text-align: center;
+    margin-top: 15%;
+    margin-bottom: 20%;
+}
+
+
+.input-box{
+    width: 75%;
+    margin-left: 13%;
+}
+
+.login-input {
+    margin-bottom: 3%;
+    
+}
+
+.login-box {
+    width: 25%;
+    height: 60%;
+    z-index: 1;
+    position: relative;
+    
+}
+
+.login-box::after {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 1px #9b9b9b;
+    content: "";
+    z-index: -1;
+    background-color: #FFFFFF;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.join-title {
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+
+.join-box {
+    width: 30%;
+    height: 80%;
+    z-index: 1;
+    position: relative;
+    
+}
+
+.join-box::after {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 1px #9b9b9b;
+    content: "";
+    z-index: -1;
+    background-color: #FFFFFF;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.join-input-box {
+    margin-left: 15%;
+}
+
+.join-input {
+    margin-bottom: 3%;
+    width: 80%;
+    
+}
+
+label {
+	display:inline-block;
+	text-align:center;
+	font-weight:bold;
+}
+
+.navbar-brand {
+    font-weight:bold;
+    font-size: 20px;
+}
+
+.nav-link {
+    font-weight: bold;
+}
+
+.main-container {
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 5%;
+}
+
+.main-title {
+    font-family: 'Orbit', sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+.section-home {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wrap-item {
+    position: relative;
+    width: 50%;
+    padding: 10px;
+}
+
+.wrap-half {
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.item-card {
+    margin-top: 36px;
+    width: 48%;
+    height: 330px;
+    border-radius: 14px;
+    box-shadow:  4px 12px 32px 6px rgba(0,0,0,.09);
+    transition: all 0.3s ease-out;
+    font-family: 'TheJamsil3Regular';
+    font-size: 22px;
+    text-align: center;
+}
+
+.item-card:hover{
+    transform: translateY(-10px);
+    box-shadow:  4px 12px 32px 6px rgba(0,0,0,0.3);
+}
+
+.item-card a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.item-card a:hover {
+    color: #000000;
+}
+
+.info-box {
+    margin-top: 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.notice-a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.notice-a:hover{
+    color: #000000;
+}
+
+.notice-item {
+    margin-top: 36px;
+    border-radius: 14px;
+    width: 85%;
+    height: 150px;
+    box-shadow:  4px 12px 32px 6px rgba(0,0,0,.09);
+    transition: all 0.3s ease-out;
+    display: block;
+}
+
+.notice-item:hover{
+    transform: translateY(-10px);
+    box-shadow:  4px 12px 32px 6px rgba(0,0,0,0.3);
+}
+
+
+.notice-title {
+    height: 50%;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 30px;
+    font-family: 'TheJamsil3Regular';
+    font-size: 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.notice-content {
+    height: 50%;
+    font-family: 'TheJamsil1Thin';
+    color: #9b9b9b;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 25px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.post-img {
+    width: 80%;
+    height: 60%;
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+.post-img img{
+    width:100%;
+    height:100%;
+    object-fit: fill;
+    border-radius: 3px;
+}
+
+.title-box {
+    padding-top: 50px;
+}
+
+.board-title {
+    font-family: 'TheJamsil3Regular';
+    font-size: 30px;
+    text-align: center;
+}
+
+.board-writer {
+    font-family: 'TheJamsil3Regular';
+    font-size: 15px;
+    text-align: center;
+}
+
+.board-date {
+    font-family: 'TheJamsil1Thin';
+    text-align: center;
+}
+
+.board-content {
+    font-family: 'TheJamsil2Light';
+}
+
+.back-box {
+    margin-top: 100px;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.back-button {
+    border-radius: 14px;
+    width: 100px;
+    line-height: 50px;
+    color: black;
+    background-color: #797979;
+}
+
+.back-button:hover {
+    background-color: #000000;
+    color: white
+}
+
+.back-box a{
+    text-decoration: none;
+}
+
+table {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.date-th {
+    width: 200px;
+}
+
+.board-a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+.board-a:hover {
+    text-decoration: underline;
+    color: #000000;
+}
+
+.count-widget {
+    margin-left: 0px;
+    color: rgb(100, 146, 77);
+    font-size: small;
+}
+
+.search-box{
+    text-align: center;
+}
+
+.search-box .form-control {
+    width:70%;
+    display: inline-block;
+}
+
+.button-box {
+    display: flex;
+    justify-content: end;
+}
+
+.image-box {
+    max-width: 100%;
+    height: auto;
+    padding-bottom: 50px;
+}
+
+.content-box {
+    word-break: break-all;
+    padding-top: 100px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.like-box {
+    margin-top: 25px;
+    height: 30px;
+    display: flex;
+    justify-content: end;
+}
+
+.like-item {
+    width: 25px;
+}
+
+.like-form {
+    height: 27px;
+    width: 25px
+}
+
+.like-count{
+    font-family: 'TheJamsil1Thin';
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.comment-count {
+    font-family: 'TheJamsil2Light';
+    font-size: 18px;
+}
+
+.comment-input {
+    width: 90%;
+}
+
+
+.comment-btn {
+    margin-left: 20px;
+    width: 7%;
+    height: 100%;
+    border-radius: 14px;
+    border: 0px;
+    color: black;
+    background-color: #d5eafa;
+}
+
+.comment-btn:hover {
+    background-color: #9bc7e6;
+    color: white
+}
+
+.comment-list {
+    margin-top: 50px;
+}
+
+.comment-info {
+    width: 100%;
+    display: flex;
+}
+
+.comment-card {
+    width: 80%;
+    word-break: break-all;
+    margin-bottom: 30px;
+}
+
+.comment-user {
+    font-family: 'TheJamsil3Regular';
+}
+
+.comment-date {
+    font-family: 'TheJamsil1Thin';
+    font-size: 13px;
+}
+
+.comment {
+    font-family: 'TheJamsil2Light';
+}
+
+.comment-op {
+    padding-left: 20px;
+}
+
+.toggle-active {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.toggle-label {
+    width: 25px;
+    height: 25px;
+}
+
+.toggle-label img {
+    width: 100%;
+    height: 100%;
+    
+}
+
+.toggle-label:hover {
+    background-color: #8a8a8a;
+    border-radius: 14px;
+}
+
+
+.toggle-active {
+    display: none;
+    text-align: center;
+    width: 100px;
+    background-color: rgb(91, 90, 90);
+    border-radius: 10px;
+}
+
+.toggle-active li:hover {
+    background-color:#b1b1b1;
+    border-radius: 10px;
+}
+
+.toggle-active a{
+    text-decoration: none;
+    color: white;
+}
+
+.toggle-active a:hover{
+    text-decoration: none;
+    border-radius: 10px;
+    color: #000000;
+}
+
+
+.write-container {
+    margin-top: 50px;
+}
+
+.write-container .write-title {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 15px;
+}
+
+.write-container input[type="file"] {
+
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    width: 100%;
+    
+}
+
+.write-container input[type="file"]::file-selector-button {
+    display: none;
+}
+
+
+.file-box {
+    padding-bottom: 15px;
+}
+
+.file-box .file-name {    
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    width: 90%;
+    color: #999999;
+}
+
+.file-box label {
+    padding: 9px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    border-radius: 14px;
+    font-family: 'TheJamsil2Light';;
+    cursor: pointer;
+    height: 40px;
+    width: 8%;
+    float: right;
+}
+
+.file-box label:hover {
+    color: black;
+    background-color: #797979;
+}
+
+.file-box input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+textarea {
+    width: 100%;
+    height: 500px;
+}
+
+.alert-login {
+    margin-top: 150px;
+    text-align: center;
+    width: 100%;
+    font-family: 'Orbit', sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.img-card{
+    margin-top: 40px;
+    height: 300px;
+    width: 250px;
+    margin-left: 5%;
+    border-radius: 14px;
+    box-shadow:  4px 12px 32px 6px rgba(0,0,0,.09);
+    transition: all 0.3s ease-out;
+    float: left;
+}
+
+.img-card:hover{
+    transform: translateY(-10px);
+    box-shadow:  4px 12px 32px 6px rgba(0,0,0,0.3);
+}
+
+.img-card a{
+    text-decoration: none;
+    color: #000000;
+}
+
+.img-card a:hover{
+    text-decoration: underline;
+    color: #000000;
+}
+
+.post-box {
+    margin-left: 10%;
+    margin-top: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: 'TheJamsil2Light';
+}

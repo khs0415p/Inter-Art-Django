@@ -9,12 +9,13 @@
     </div>
     {% if not user.is_authenticated %}
     <!-- 확인 필요 -->
-    <button type="button" class="btn btn-primary" onclick="location.href='/main/'" style="float: middle;">로그인</button>
-    {% else %}  
+    <div class="alert-login">
+      로그인을 해주세요.
+      <button type="button" class="btn btn-primary" onclick="location.href='/main/'" style="float: middle;">로그인</button>
+    </div>
+    {% else %}
+    
     {% for item in post_list %}
-    {% if forloop.counter0|divisibleby:3 %}
-    <div class="img-list">
-    {% endif %}
     <div class='img-card'>
       <div class="post-img">
         <a class="img-product" href="../detail/{{ item.id }}">
@@ -24,17 +25,15 @@
         <img src="/static/no_image.png" alt="">
         {% endif %}
       </div>
-      <div class="info-card">
-        <div class="post-info">제목 : {{ item.title }}</div>
-        <div class="post-info">좋아요: {{ item.like_user.count }}</div>
-        <div class="post-info">작성일 : {{ item.created_at }}</div>
-      </div>
+      
+      <div class="post-box">제목 : {{ item.title }}</div>
+      <div class="post-box">좋아요: {{ item.like_user.count }}</div>
+      <div class="post-box">작성일 : {{ item.created_at }}</div>
+      
       </a>
     </div>
-    {% if forloop.counter|divisibleby:3 %}
-    </div>
-    {% endif %}
     {% endfor %}
+  
     {% endif %}
   </div>
 </div>

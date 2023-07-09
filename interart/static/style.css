@@ -321,6 +321,7 @@ label {
 
 table {
     text-align: center;
+    margin-top: 50px;
 }
 
 .date-th {
@@ -352,8 +353,6 @@ table {
     width:70%;
     display: inline-block;
 }
-
-/* 디테일 페이지 */
 
 .button-box {
     display: flex;
@@ -394,8 +393,6 @@ table {
     margin-left: 10px;
     margin-top: 5px;
 }
-
-
 
 .comment-count {
     font-family: 'TheJamsil2Light';
@@ -454,7 +451,7 @@ table {
     padding-left: 20px;
 }
 
-.active {
+.toggle-active {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -502,29 +499,92 @@ table {
 }
 
 
-/* 경계 */
-
-.info-card {
-    margin-top:10%;
-    margin-left: 10%;
+.write-container {
+    margin-top: 50px;
 }
 
-.post-info {
+.write-container .write-title {
     width: 100%;
-    margin: 0;
-    font-family: 'Nanum Gothic', sans-serif;
-    font-size: 15px;
+    height: 40px;
+    margin-bottom: 15px;
 }
 
+.write-container input[type="file"] {
+
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    width: 100%;
+    
+}
+
+.write-container input[type="file"]::file-selector-button {
+    display: none;
+}
+
+
+.file-box {
+    padding-bottom: 15px;
+}
+
+.file-box .file-name {    
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    width: 90%;
+    color: #999999;
+}
+
+.file-box label {
+    padding: 9px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    border-radius: 14px;
+    font-family: 'TheJamsil2Light';;
+    cursor: pointer;
+    height: 40px;
+    width: 8%;
+    float: right;
+}
+
+.file-box label:hover {
+    color: black;
+    background-color: #797979;
+}
+
+.file-box input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+textarea {
+    width: 100%;
+    height: 500px;
+}
+
+.alert-login {
+    margin-top: 150px;
+    text-align: center;
+    width: 100%;
+    font-family: 'Orbit', sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+}
 
 .img-card{
-    width: 20%;
-    height: 400px;
-    margin-left: 10%;
-    float: left;
-    box-shadow:  4px 12px 32px 6px rgba(0,0,0,.09);
+    margin-top: 40px;
+    height: 300px;
+    width: 250px;
+    margin-left: 5%;
     border-radius: 14px;
+    box-shadow:  4px 12px 32px 6px rgba(0,0,0,.09);
     transition: all 0.3s ease-out;
+    float: left;
 }
 
 .img-card:hover{
@@ -540,4 +600,13 @@ table {
 .img-card a:hover{
     text-decoration: underline;
     color: #000000;
+}
+
+.post-box {
+    margin-left: 10%;
+    margin-top: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: 'TheJamsil2Light';
 }

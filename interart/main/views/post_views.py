@@ -28,9 +28,6 @@ def detail(request, post_id):
     
     if request.method == "POST":
         form = CommentForm(request.POST)
-        print(request.POST)
-        for f in form:
-            print(f.errors)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.user = request.user

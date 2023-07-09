@@ -15,7 +15,8 @@
                     <th>번호</th>
                     <th>제목</th>
                     <th>작성자</th>
-                    <th>작성일시</th>
+                    <th class="date-th">작성일시</th>
+                    <th>좋아요</th>
                     {% if user.is_authenticated %}
                     <button type="button" class="btn btn-primary" onclick="location.href='../write'" style="float: right;">글쓰기</button>
                     {% endif %}
@@ -27,11 +28,12 @@
                 <tr>
                     <td>{{ post_list.paginator.count |sub:post_list.start_index|sub:forloop.counter0|add:1 }}</td>
                     <td>
-                        <a class="board-title" href="{% url 'main:detail' post.id %}">{{ post.title }}</a>
-                        <span class="comment-count">{{ post.comment_set.count }}</span>
+                        <a class="board-a" href="{% url 'main:detail' post.id %}">{{ post.title }}</a>
+                        <span class="count-widget">{{ post.comment_set.count }}</span>
                     </td>
-                    <td>{{ post.user }}</td>
-                    <td>{{ post.created_at }}</td>
+                    <td class="td-1">{{ post.user }}</td>
+                    <td class="td-1">{{ post.created_at }}</td>
+                    <td class="td-1">{{ post.like_user.count }}</td>
                 </tr>
                 {% endfor%}
                 {% else %}

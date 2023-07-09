@@ -11,6 +11,7 @@ urlpatterns = [
     path('home/', board_views.home, name='home'),
     path('board/', board_views.board, name='board'),
     path('my_home/', board_views.my_home, name='my_home'),
+    path('notice/<int:notice_id>', board_views.notice, name='notice'),
     
     path('write/', post_views.write, name='write'),
     path('detail/<int:post_id>/', post_views.detail, name='detail'),

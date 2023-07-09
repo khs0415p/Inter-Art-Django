@@ -6,6 +6,13 @@
 }
 
 @font-face {
+    font-family: 'TheJamsil2Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil2Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'TheJamsil1Thin';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil1Thin.woff2') format('woff2');
     font-weight: 100;
@@ -136,8 +143,8 @@ label {
 }
 
 .main-container {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 15%;
+    margin-right: 15%;
     margin-top: 5%;
 }
 
@@ -167,7 +174,7 @@ label {
 
 .item-card {
     margin-top: 36px;
-    width: 350px;
+    width: 48%;
     height: 330px;
     border-radius: 14px;
     box-shadow:  4px 12px 32px 6px rgba(0,0,0,.09);
@@ -188,7 +195,6 @@ label {
 }
 
 .item-card a:hover {
-    text-decoration: underline;
     color: #000000;
 }
 
@@ -199,11 +205,19 @@ label {
     overflow: hidden;
 }
 
+.notice-a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.notice-a:hover{
+    color: #000000;
+}
 
 .notice-item {
     margin-top: 36px;
     border-radius: 14px;
-    width: 555px;
+    width: 85%;
     height: 150px;
     box-shadow:  4px 12px 32px 6px rgba(0,0,0,.09);
     transition: all 0.3s ease-out;
@@ -240,12 +254,268 @@ label {
     overflow: hidden;
 }
 
-
-.img-list {
-    margin-top: 70px;
-    width: 100%;
-    height: 400px;
+.post-img {
+    width: 80%;
+    height: 60%;
+    margin-top: 10%;
+    margin-left: 10%;
 }
+
+.post-img img{
+    width:100%;
+    height:100%;
+    object-fit: fill;
+    border-radius: 3px;
+}
+
+.title-box {
+    padding-top: 50px;
+}
+
+.board-title {
+    font-family: 'TheJamsil3Regular';
+    font-size: 30px;
+    text-align: center;
+}
+
+.board-writer {
+    font-family: 'TheJamsil3Regular';
+    font-size: 15px;
+    text-align: center;
+}
+
+.board-date {
+    font-family: 'TheJamsil1Thin';
+    text-align: center;
+}
+
+.board-content {
+    font-family: 'TheJamsil2Light';
+}
+
+.back-box {
+    margin-top: 100px;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.back-button {
+    border-radius: 14px;
+    width: 100px;
+    line-height: 50px;
+    color: black;
+    background-color: #797979;
+}
+
+.back-button:hover {
+    background-color: #000000;
+    color: white
+}
+
+.back-box a{
+    text-decoration: none;
+}
+
+table {
+    text-align: center;
+}
+
+.date-th {
+    width: 200px;
+}
+
+.board-a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+.board-a:hover {
+    text-decoration: underline;
+    color: #000000;
+}
+
+.count-widget {
+    margin-left: 0px;
+    color: rgb(100, 146, 77);
+    font-size: small;
+}
+
+.search-box{
+    text-align: center;
+}
+
+.search-box .form-control {
+    width:70%;
+    display: inline-block;
+}
+
+/* 디테일 페이지 */
+
+.button-box {
+    display: flex;
+    justify-content: end;
+}
+
+.image-box {
+    max-width: 100%;
+    height: auto;
+    padding-bottom: 50px;
+}
+
+.content-box {
+    word-break: break-all;
+    padding-top: 100px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.like-box {
+    margin-top: 25px;
+    height: 30px;
+    display: flex;
+    justify-content: end;
+}
+
+.like-item {
+    width: 25px;
+}
+
+.like-form {
+    height: 27px;
+    width: 25px
+}
+
+.like-count{
+    font-family: 'TheJamsil1Thin';
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+
+
+.comment-count {
+    font-family: 'TheJamsil2Light';
+    font-size: 18px;
+}
+
+.comment-input {
+    width: 90%;
+}
+
+
+.comment-btn {
+    margin-left: 20px;
+    width: 7%;
+    height: 100%;
+    border-radius: 14px;
+    border: 0px;
+    color: black;
+    background-color: #d5eafa;
+}
+
+.comment-btn:hover {
+    background-color: #9bc7e6;
+    color: white
+}
+
+.comment-list {
+    margin-top: 50px;
+}
+
+.comment-info {
+    width: 100%;
+    display: flex;
+}
+
+.comment-card {
+    width: 80%;
+    word-break: break-all;
+    margin-bottom: 30px;
+}
+
+.comment-user {
+    font-family: 'TheJamsil3Regular';
+}
+
+.comment-date {
+    font-family: 'TheJamsil1Thin';
+    font-size: 13px;
+}
+
+.comment {
+    font-family: 'TheJamsil2Light';
+}
+
+.comment-op {
+    padding-left: 20px;
+}
+
+.active {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.toggle-label {
+    width: 25px;
+    height: 25px;
+}
+
+.toggle-label img {
+    width: 100%;
+    height: 100%;
+    
+}
+
+.toggle-label:hover {
+    background-color: #8a8a8a;
+    border-radius: 14px;
+}
+
+
+.toggle-active {
+    display: none;
+    text-align: center;
+    width: 100px;
+    background-color: rgb(91, 90, 90);
+    border-radius: 10px;
+}
+
+.toggle-active li:hover {
+    background-color:#b1b1b1;
+    border-radius: 10px;
+}
+
+.toggle-active a{
+    text-decoration: none;
+    color: white;
+}
+
+.toggle-active a:hover{
+    text-decoration: none;
+    border-radius: 10px;
+    color: #000000;
+}
+
+
+/* 경계 */
+
+.info-card {
+    margin-top:10%;
+    margin-left: 10%;
+}
+
+.post-info {
+    width: 100%;
+    margin: 0;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 15px;
+}
+
 
 .img-card{
     width: 20%;
@@ -270,70 +540,4 @@ label {
 .img-card a:hover{
     text-decoration: underline;
     color: #000000;
-}
-
-.post-img {
-    width: 80%;
-    height: 60%;
-    margin-top: 10%;
-    margin-left: 10%;
-}
-
-.post-img img{
-    width:100%;
-    height:100%;
-    object-fit: fill;
-    border-radius: 3px;
-}
-
-.top-icon{
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    z-index: 1;
-    border-radius: 3px;
-}
-
-
-.info-card {
-    margin-top:10%;
-    margin-left: 10%;
-}
-
-.post-info {
-    width: 100%;
-    margin: 0;
-    font-family: 'Nanum Gothic', sans-serif;
-    font-size: 15px;
-}
-
-.board-title {
-    text-decoration: none;
-    color: #000000;
-    font-weight:700;
-    margin-right: 5px;
-}
-
-.comment-count {
-    margin-left: 0px;
-    color: rgb(100, 146, 77);
-    font-size: small;
-}
-
-.search-box{
-    text-align: center;
-}
-
-.search-box .form-control {
-    width:70%;
-    display: inline-block;
-}
-
-.image-box {
-    height: auto;
-}
-
-.image-box img {
-    width: 100%;
-    height: 100%;
 }

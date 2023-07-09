@@ -129,7 +129,6 @@ class PostForm(forms.ModelForm): # ModelForm 은 장고 모델 폼
 class CommentForm(forms.ModelForm):
     comment = forms.CharField(
             required=True,
-            max_length=200,
             label='',
             widget=forms.TextInput(attrs={
                 'placeholder': "댓글을 달아주세요."

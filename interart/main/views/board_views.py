@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from ..models import Post, Notice
 from datetime import date, timedelta
+from django.shortcuts import get_object_or_404
 
 
 
@@ -39,6 +40,14 @@ def board(request):
     page_obj = paginator.get_page(page)
     
     return render(request, 'main/board.html', {'post_list': page_obj, 'page':page, 'kw': kw})
+
+
+# Notice
+def notice(requset, notice_id):
+    notice = get_object_or_404(Notice, pk=notice_id)
+    notice.content = notice.content.split('\n')
+
+    return render(requset, 'main/notice.html', {"notice": notice})
 
 
 # My Home

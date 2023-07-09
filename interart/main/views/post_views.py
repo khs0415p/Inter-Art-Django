@@ -28,6 +28,9 @@ def detail(request, post_id):
     
     if request.method == "POST":
         form = CommentForm(request.POST)
+        print(request.POST)
+        for f in form:
+            print(f.errors)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.user = request.user
@@ -37,6 +40,9 @@ def detail(request, post_id):
             # return
         
     _post = Post.objects.get(id = post_id)
+    _post.content = _post.content.split('\n')
+    _post.comment = _post.comment_set.order_by('-created_at')
+    
     return render(request, 'main/detail.html', {'post': _post})
 
 

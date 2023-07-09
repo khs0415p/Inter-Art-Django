@@ -10,16 +10,18 @@
           공지사항
         </div>
         {% for item in notice %}
-        <div class="notice-item">
-          <div class="notice-title">
-            <!-- {{ notice.title }}-->
-            {{ item.title }}
+        <a class="notice-a" href="{% url 'main:notice' item.id %}">
+          <div class="notice-item">
+            <div class="notice-title">
+              <!-- {{ notice.title }}-->
+              {{ item.title }}
+            </div>
+            <div class="notice-content">
+              <!-- {{ notice.content }}-->
+              {{ item.content }}
+            </div>
           </div>
-          <div class="notice-content">
-            <!-- {{ notice.content }}-->
-            {{ item.content }}
-          </div>
-        </div>
+        </a>
         {% endfor %}
       </div>
       <div class="wrap-item">
